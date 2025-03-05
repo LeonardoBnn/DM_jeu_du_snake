@@ -121,7 +121,7 @@ void save_game() {
     _getch();
 
     gotoxy(0, HEIGHT + 2);
-    printf("                                                 ");
+    printf("                                                                         ");
     fflush(stdout);
 }
 
