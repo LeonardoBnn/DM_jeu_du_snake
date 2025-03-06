@@ -219,7 +219,7 @@ void menu() {
     printf("2. Rapide\n");
     char speed_choice = _getch();
     if (speed_choice == '2') {
-        speed = 75;
+        speed = 100;
     }
 }
 
