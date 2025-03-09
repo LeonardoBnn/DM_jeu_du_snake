@@ -20,21 +20,21 @@ int direction = 77;  // Direction initiale: droite
 int speed = 150;      // Vitesse initiale
 int game_over = 0;  // 0 = en cours, 1 = perdu
 
-void gotoxy(int x, int y) {
+void gotoxy(int x, int y) {			//procédure pour définir où un nouveau caractère sera écrit.
     COORD coord;
-    coord.X = x;
+    coord.X = x;	
     coord.Y = y;
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void hidecursor() {
+void hidecursor() {					//procédure pour cache le courseur de texte
     CONSOLE_CURSOR_INFO cursorInfo;
     cursorInfo.bVisible = FALSE;
     cursorInfo.dwSize = 1;
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
-void draw_border() {
+void draw_border() {				//procédure pour créer le périmètre du jeu
     for (int i = 0; i <= WIDTH; i++) {
         gotoxy(i, 0);
         printf("-");
@@ -49,7 +49,7 @@ void draw_border() {
     }
 }
 
-int is_on_snake(int x, int y) {
+int is_on_snake(int x, int y) {       	//fonction qui empêche la creation de la nourriture si se trouve sur le serpent
     for (int i = 0; i < length; i++) {
         if (x == snake[i].x && y == snake[i].y) {
             return 1;
@@ -58,7 +58,7 @@ int is_on_snake(int x, int y) {
     return 0;
 }
 
-void generate_apples() {
+void generate_apples() {			//procédure pour la génération de la nourriture
     for (int i = 0; i < APPLES; i++) {
         do {
             apples[i].x = rand() % (WIDTH - 1) + 1;
@@ -67,7 +67,7 @@ void generate_apples() {
     }
 }
 
-void init_game() {
+void init_game() {			//démarrage du jeu avec l'appell des procédures nécéssaires et la création du serpent
     system("cls");
     hidecursor();
     srand(time(NULL));
@@ -79,7 +79,7 @@ void init_game() {
     draw_border();
 }
 
-void draw() {
+void draw() {			//écriture des caractères du serpent et de la nourriture
     for (int i = 0; i < APPLES; i++) {
         gotoxy(apples[i].x, apples[i].y);
         printf("O");
@@ -92,7 +92,7 @@ void draw() {
     printf(" ");
 }
 
-void save_game() {
+void save_game() {			//procédure pour sauvegarder le jeu et le mettre en pause
     if (game_over) {  // Interdire la sauvegarde si le jeu est terminé
         gotoxy(0, HEIGHT + 1);
         printf("Impossible de sauvegarder : Partie terminée !");
@@ -127,7 +127,7 @@ void save_game() {
 
 
 
-void update() {
+void update() {			//procédure pour gérer la direction du serpent
     if (game_over) return;  // Arrêter les mises à jour si le jeu est terminé
 
     Point new_head = snake[0];
@@ -181,7 +181,7 @@ void update() {
 }
 
 
-void load_game() {
+void load_game() {			//procédure pour rélancer une partie souvegardée
     FILE *file = fopen("savegame.txt", "r");
     if (file) {
         fscanf(file, "%d %d %d", &length, &direction, &game_over);
@@ -200,7 +200,7 @@ void load_game() {
     }
 }
 
-void menu() {
+void menu() {   //procédure pour l'affichage du menu
     system("cls");
     printf("Jeu du Serpent\n");
     printf("1. Nouvelle Partie\n");
@@ -223,7 +223,7 @@ void menu() {
     }
 }
 
-int main() {
+int main() {	//programme principale
     menu();
     
     init_game();
